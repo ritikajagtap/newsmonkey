@@ -9,12 +9,14 @@ export class News extends Component {
   static defaultProps = {
     country: 'in',
     pageize: 5,
-    category: 'general'
+    category: 'general',
+    apiKey: ''
   }
   static propTypes = {
     country: PropTypes.string,
     pageSize: PropTypes.number,
     category: PropTypes.string,
+    apiKey: PropTypes.string
   }
   constructor(props) {
     super(props);
@@ -59,7 +61,7 @@ export class News extends Component {
     this.setState({
       page: this.state.page + 1
     });
-    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apikey=dbb2ef303dce434c87ca8488d40b1e9b&page=${this.state.page}&pageSize=${this.props.pageSize}`
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apikey=${this.props.apiKey}&page=${this.state.page}&pageSize=${this.props.pageSize}`
     this.setState({ loading: true })
 
     let data = await fetch(url);
@@ -71,8 +73,8 @@ export class News extends Component {
   };
   render() {
     return (<>
-      <div className="cotnainer " >
-        <h1 className='text-center my-3 mb-3'>NEWS-Monkey Top headlines</h1>
+      <div className="cotnainer" style={{backgroundColor:"#191970", width:"100%"}}>
+        <h1 className='text-center mb-3' style={{color:"white"}}>NEWS-Monkey Top headlines</h1>
         {this.state.loading && <Spinner />}
         <InfiniteScroll style={{margin: "12px"}}
           dataLength={this.state.articles.length}
